@@ -1,0 +1,61 @@
+.flx {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+.flx-item {
+  margin-right: 0.5rem;
+  margin-left: 0.5rem;
+}
+/* Circle Progress
+--------------------------------------*/
+/* Animacion */
+@keyframes progress {
+  0% {
+    stroke-dasharray: 0 100;
+  }
+}
+.circle-progress {
+  display: block;
+  width: 70px;
+}
+.circle-text {
+  fill: #fff;
+  font-size: 0.4rem;
+  text-anchor: middle;
+  dominant-baseline: middle;
+  font-weight: 500;
+}
+
+.circle-primary {
+  fill: #808080;
+  animation: progress 1s forwards;
+  stroke-linecap: round;
+  stroke-width: 2.8;
+  stroke: #48c78e;
+}
+
+.circle-warning {
+  fill: #808080;
+  animation: progress 1s forwards;
+  stroke-linecap: round;
+  stroke-width: 2.8;
+  stroke: #f4c40c;
+}
+
+.circle-orange {
+  fill: #808080;
+  animation: progress 1s forwards;
+  stroke-linecap: round;
+  stroke-width: 2.8;
+  stroke: #e47c24;
+}
+
+.circle-red {
+  fill: #808080;
+  animation: progress 1s forwards;
+  stroke-linecap: round;
+  stroke-width: 2.8;
+  stroke: #e44c3c;
+}

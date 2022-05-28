@@ -1,0 +1,13 @@
+/* Set the size of the div element that contains the map */
+#map {
+    height: 100vh;
+    /* The height is 400 pixels */
+    width: 100%;
+    /* The width is the width of the web page */
+  }
+
+  .map-info-window {
+    font-family: 'K2D', sans-serif;
+    width:85;
+    height:185;
+}

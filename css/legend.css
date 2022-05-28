@@ -1,0 +1,19 @@
+/* import font*/
+@import url('https://fonts.googleapis.com/css2?family=K2D:wght@200;300&display=swap');
+  
+  #legend {
+    font-family: 'K2D', sans-serif;
+    background: transparent;
+
+    padding: 10px;
+    margin: 10px;
+
+  }
+  
+  #legend h3 {
+    margin-top: 0;
+  }
+  
+  #legend img {
+    vertical-align: middle;
+  }
