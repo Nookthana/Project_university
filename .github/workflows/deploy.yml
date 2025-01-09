@@ -16,12 +16,15 @@ jobs:
     - name: Authenticate to Google Cloud
       uses: google-github-actions/auth@v1  # ใช้เวอร์ชันที่ถูกต้อง
       with:
-        credentials_json: ${{ secrets.GCP_SA_KEY }}  #  ใช้ Secret สำหรับ Service Account Key
+        credentials_json: ${{ secrets.GCP_SA_KEY }}  # ใช้ Secret สำหรับ Service Account Key
 
     - name: Set up Google Cloud SDK
       run: |
-        # สร้างไฟล์ JSON จากค่าใน GitHub Secret
+        # สร้างไฟล์ JSON จากค่าใน GitHub Secret โดยตรวจสอบการจัดรูปแบบให้ถูกต้อง
         echo "${{ secrets.GCP_SA_KEY }}" > "${HOME}/gcloud-service-key.json"
+        
+        # ตรวจสอบว่าไฟล์ JSON ถูกสร้างขึ้นมาแล้ว
+        cat "${HOME}/gcloud-service-key.json"
         
         # ใช้ไฟล์นี้ในการ Authenticate
         gcloud auth activate-service-account --key-file="${HOME}/gcloud-service-key.json"
