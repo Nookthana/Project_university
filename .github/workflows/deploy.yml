@@ -21,7 +21,7 @@ jobs:
     - name: Set up Google Cloud SDK
       uses: google-github-actions/setup-gcloud@v2
       with:
-        version: '380.0.0'
+        version: '330.0.0'  # ใช้เวอร์ชันอื่น เช่น '330.0.0'
         project_id: 'triple-env-447304-f9'  # กำหนด project ID ที่ใช้
 
     - name: Deploy to VM
