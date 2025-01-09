@@ -16,20 +16,20 @@ jobs:
     - name: Authenticate to Google Cloud
       uses: google-github-actions/auth@v1
       with:
-        credentials_json: ${{ secrets.GCP_SA_KEY }}  # ใช้ไฟล์ JSON ที่เก็บใน Secrets โดยตรง
- 
+        credentials_json: ${{ secrets.GCP_SA_KEY }}
+    
     - name: Set up Google Cloud SDK
       run: |
         # Save the service account key to a file
         echo "${{ secrets.GCP_SA_KEY }}" > "${HOME}/gcloud-service-key.json"
-
-        # Optional: Debugging - Check if the service key file was written correctly
+    
+        # Debugging - Check if the service key file was written correctly
         cat "${HOME}/gcloud-service-key.json"
-
+    
         # Debugging JSON format to check if it's valid
         echo "Validating JSON file..."
-        cat "${HOME}/gcloud-service-key.json" | jq . || { echo "Invalid JSON"; exit 1; }
-
+        echo "${{ secrets.GCP_SA_KEY }}" | jq . || { echo "Invalid JSON"; exit 1; }
+    
         # Activate the service account and set the project
         gcloud auth activate-service-account --key-file="${HOME}/gcloud-service-key.json"
         gcloud config set project triple-env-447304-f9
