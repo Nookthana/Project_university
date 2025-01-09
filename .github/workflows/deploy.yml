@@ -17,7 +17,7 @@ jobs:
       uses: google-github-actions/auth@v1
       with:
         credentials_json: ${{ secrets.GCP_SA_KEY }}  # ใช้ไฟล์ JSON ที่เก็บใน Secrets โดยตรง
-
+ 
     - name: Set up Google Cloud SDK
       run: |
         # Save the service account key to a file
