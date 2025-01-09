@@ -20,4 +20,4 @@ jobs:
         username: ${{ secrets.FTP_USERNAME }}  # ดึงค่าจาก Secrets
         password: ${{ secrets.FTP_PASSWORD }}  # ดึงค่าจาก Secrets
         local-dir: ./  # โฟลเดอร์ต้นทาง
-        server-dir: /var/www/html  # โฟลเดอร์ปลายทาง
+        server-dir: /var/www/html   # โฟลเดอร์ปลายทาง
