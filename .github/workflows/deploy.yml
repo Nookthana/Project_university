@@ -17,15 +17,14 @@ jobs:
       uses: google-github-actions/auth@v1
       with:
         credentials_json: ${{ secrets.GCP_SA_KEY }}
- 
+
     - name: Set up Google Cloud SDK
       run: |
+        # ตรวจสอบไฟล์ JSON จาก secrets (ไม่ควรแสดงข้อมูลใน log)
         echo "${{ secrets.GCP_SA_KEY }}" > "${HOME}/gcloud-service-key.json"
-        cat "${HOME}/gcloud-service-key.json"  # ตรวจสอบว่าไฟล์ JSON ถูกต้อง
         gcloud auth activate-service-account --key-file="${HOME}/gcloud-service-key.json"
         gcloud config set project triple-env-447304-f9
 
     - name: Deploy to VM
       run: |
         gcloud compute ssh my-test-deploy --zone asia-southeast1-a --project triple-env-447304-f9 --command "cd /var/www/html/my-project && git pull && composer install && php artisan migrate"
-  
