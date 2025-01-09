@@ -20,11 +20,14 @@ jobs:
 
     - name: Set up Google Cloud SDK
       run: |
-        # ตรวจสอบไฟล์ JSON จาก secrets (ไม่ควรแสดงข้อมูลใน log)
-        echo "${{ secrets.GCP_SA_KEY }}" > "${HOME}/gcloud-service-key.json"
+        # Decode the service account key from base64 and save it to a file
+        echo "${{ secrets.GCP_SA_KEY }}" | base64 --decode > "${HOME}/gcloud-service-key.json"
+        
+        # Activate the service account and set the project
         gcloud auth activate-service-account --key-file="${HOME}/gcloud-service-key.json"
         gcloud config set project triple-env-447304-f9
 
     - name: Deploy to VM
       run: |
+        # SSH into the VM and run the necessary commands
         gcloud compute ssh my-test-deploy --zone asia-southeast1-a --project triple-env-447304-f9 --command "cd /var/www/html/my-project && git pull && composer install && php artisan migrate"
