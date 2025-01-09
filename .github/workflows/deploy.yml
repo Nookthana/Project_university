@@ -8,7 +8,7 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
- 
+
     steps:
       # Step 1: Checkout the code from GitHub repository
       - name: Checkout code
@@ -19,12 +19,9 @@ jobs:
         uses: webfactory/ssh-agent@v0.5.3
         with:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}  # ใช้ SSH private key จาก GitHub Secrets
-      - name: Add passphrase to SSH agent
-        run: |
-              echo "${{ secrets.SSH_PASSPHRASE }}" | ssh-add - <<< "${{ secrets.SSH_PRIVATE_KEY }}"
-  
-      # Step 3: Deploy to Google VM
-      - name: Deploy to Google Cloud VM  
+
+      # Step 3: Deploy to Google Cloud VM  
+      - name: Deploy to Google Cloud VM
         run: |
           ssh -o StrictHostKeyChecking=no [USERNAME]@[VM_IP_ADDRESS] << 'EOF'
             cd /var/www/[your_project_directory]  # เปลี่ยน path ของโปรเจกต์ตามที่เก็บใน VM
