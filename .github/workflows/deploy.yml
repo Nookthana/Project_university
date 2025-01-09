@@ -1,0 +1,23 @@
+name: Deploy to Server
+
+on:
+  push:
+    branches:
+      - main  # รัน Workflow เมื่อมีการ Push ไปที่ branch 'main'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v3  # ดึงโค้ดจาก Repository
+
+    - name: Deploy to FTP Server
+      uses: SamKirkland/FTP-Deploy-Action@4.3.0
+      with:
+        server: ftp://ftp.example.com  # URL ของ FTP Server
+        username: ${{ secrets.FTP_USERNAME }}  # Username จาก Secrets
+        password: ${{ secrets.FTP_PASSWORD }}  # Password จาก Secrets
+        local-dir: ./  # โฟลเดอร์ต้นทางที่จะอัปโหลด (ในโปรเจกต์)
+        server-dir: /path/to/deploy  # โฟลเดอร์ปลายทางบนเซิร์ฟเวอร์
