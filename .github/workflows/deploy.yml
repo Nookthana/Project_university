@@ -20,13 +20,22 @@ jobs:
         with:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}  # ใช้ SSH private key จาก GitHub Secrets
 
-      # Step 3: Deploy to Google Cloud VM  
+      # Step 3: Deploy to Google Cloud VM
       - name: Deploy to Google Cloud VM
         run: |
           ssh -o StrictHostKeyChecking=no [USERNAME]@[VM_IP_ADDRESS] << 'EOF'
-            cd /var/www/[your_project_directory]  # เปลี่ยน path ของโปรเจกต์ตามที่เก็บใน VM
-            git pull origin main   # Pull โค้ดล่าสุดจาก GitHub
-            npm install            # หรือคำสั่งติดตั้ง dependencies ถ้าคุณใช้ Node.js
-            npm run build           # หรือคำสั่ง build ที่โปรเจกต์ของคุณต้องการ
-            # หรือคำสั่งอื่น ๆ ที่ต้องการเช่น PHP artisan migrate สำหรับ Laravel
+            # เปลี่ยน path ของโปรเจกต์ตามที่เก็บใน VM
+            cd /var/www/[your_project_directory]  
+
+            # Pull โค้ดล่าสุดจาก GitHub
+            git pull origin main
+
+            # ถ้าเป็นโปรเจกต์ Node.js
+            npm install
+
+            # หรือหากเป็นโปรเจกต์ Laravel
+            # php artisan migrate  # ใช้คำสั่ง migrate ถ้าคุณใช้ Laravel
+
+            # หรือหากโปรเจกต์ของคุณใช้การ build
+            npm run build
           EOF
