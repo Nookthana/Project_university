@@ -3,7 +3,7 @@ name: Deploy to Server
 on:
   push:
     branches:
-      - main  # รันเมื่อ push ไปที่ branch 'main'
+      - main  # ทำงานเมื่อ Push ไปยัง Branch `main`
 
 jobs:
   deploy:
@@ -16,8 +16,8 @@ jobs:
     - name: Deploy to FTP Server
       uses: SamKirkland/FTP-Deploy-Action@4.3.0
       with:
-        server: ftp://ftp.example.com  # URL ของ FTP Server
-        username: ${{ secrets.FTP_USERNAME }}  # Secrets สำหรับ username
-        password: ${{ secrets.FTP_PASSWORD }}  # Secrets สำหรับ password
+        server: ftp://ftp.example.com  # URL เซิร์ฟเวอร์ FTP
+        username: ${{ secrets.FTP_USERNAME }}  # ดึงค่าจาก Secrets
+        password: ${{ secrets.FTP_PASSWORD }}  # ดึงค่าจาก Secrets
         local-dir: ./  # โฟลเดอร์ต้นทาง
         server-dir: /var/www/html  # โฟลเดอร์ปลายทาง
