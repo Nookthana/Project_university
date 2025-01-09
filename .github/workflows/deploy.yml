@@ -33,7 +33,7 @@ jobs:
         # Activate the service account and set the project
         gcloud auth activate-service-account --key-file="${HOME}/gcloud-service-key.json"
         gcloud config set project triple-env-447304-f9
-
+ 
 
     - name: Deploy to VM
       run: |
