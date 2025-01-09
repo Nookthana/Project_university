@@ -19,7 +19,7 @@ jobs:
         uses: webfactory/ssh-agent@v0.5.3
         with:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}  # ใช้ SSH private key จาก GitHub Secrets
-
+  
       # Step 3: Deploy to Google VM
       - name: Deploy to Google Cloud VM
         run: |
