@@ -10,14 +10,17 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    # Step 1: Checkout the code from the repository
     - name: Checkout Code
       uses: actions/checkout@v3
 
+    # Step 2: Authenticate to Google Cloud using the service account key from Secrets
     - name: Authenticate to Google Cloud
       uses: google-github-actions/auth@v1
       with:
         credentials_json: ${{ secrets.GCP_SA_KEY }}  # ใช้ไฟล์ JSON ที่เก็บใน Secrets โดยตรง
 
+    # Step 3: Set up Google Cloud SDK and authenticate using the key file
     - name: Set up Google Cloud SDK
       run: |
         # Save the service account key to a file
@@ -27,7 +30,16 @@ jobs:
         gcloud auth activate-service-account --key-file="${HOME}/gcloud-service-key.json"
         gcloud config set project triple-env-447304-f9
 
+    # Step 4: Deploy to Google Cloud VM
     - name: Deploy to VM
       run: |
         # SSH into the VM and run the necessary commands
-        gcloud compute ssh my-test-deploy --zone asia-southeast1-a --project triple-env-447304-f9 --command "cd /var/www/html/my-project && git pull && composer install && php artisan migrate"
+        gcloud compute ssh my-test-deploy \
+          --zone asia-southeast1-a \
+          --project triple-env-447304-f9 \
+          --command "cd /var/www/html/my-project && git pull && composer install && php artisan migrate"
+
+    # Optional: Clean up the service account key file after use
+    - name: Clean up service account key file
+      run: |
+        rm -f "${HOME}/gcloud-service-key.json"
