@@ -18,12 +18,11 @@ jobs:
       with:
         credentials_json: ${{ secrets.GCP_SA_KEY }}
 
-    - name: Set up gcloud CLI
-      run: |
-        curl https://sdk.cloud.google.com | bash  # ติดตั้ง gcloud CLI
-        source ~/.bashrc
-        gcloud --quiet auth activate-service-account --key-file=${{ secrets.GCP_SA_KEY }}  # ใช้ Service Account Key
-        gcloud config set project triple-env-447304-f9  # ตั้งค่าคอนฟิก Google Cloud
+    - name: Authenticate to Google Cloud
+      uses: google-github-actions/auth@v0
+      with:
+          credentials_json: ${{ secrets.GCP_SA_KEY }}  # เช็คให้แน่ใจว่าใช้ secret ที่ถูกต้อง
+  
 
     - name: Deploy to VM
       run: |
