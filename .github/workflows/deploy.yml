@@ -16,7 +16,7 @@ jobs:
     - name: Authenticate to Google Cloud
       uses: google-github-actions/auth@v1
       with:
-        credentials_json: ${{ secrets.GCP_SA_KEY }}
+        credentials_json: ${{ secrets.GCP_SA_KEY }}  # ใช้ไฟล์ JSON โดยตรงจาก secrets
 
     - name: Set up Google Cloud SDK
       run: |
@@ -26,13 +26,6 @@ jobs:
         # Activate the service account and set the project
         gcloud auth activate-service-account --key-file="${HOME}/gcloud-service-key.json"
         gcloud config set project triple-env-447304-f9
-
-    - name: Set up SSH keys
-      run: |
-        # Set up SSH keys to prevent new keys from being created
-        mkdir -p ~/.ssh
-        echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/google_compute_engine
-        chmod 600 ~/.ssh/google_compute_engine
 
     - name: Deploy to VM
       run: |
