@@ -16,7 +16,7 @@ jobs:
     - name: Authenticate to Google Cloud
       uses: google-github-actions/auth@v1
       with:
-        credentials_json: ${{ secrets.GCP_SA_KEY }}  # ใช้ไฟล์ JSON โดยตรงจาก secrets
+        credentials_json: ${{ secrets.GCP_SA_KEY }}  # ใช้ไฟล์ JSON ที่เก็บใน Secrets โดยตรง
 
     - name: Set up Google Cloud SDK
       run: |
