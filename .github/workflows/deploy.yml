@@ -28,3 +28,4 @@ jobs:
     - name: Deploy to VM
       run: |
         gcloud compute ssh my-test-deploy --zone asia-southeast1-a --project triple-env-447304-f9 --command "cd /var/www/html/my-project && git pull && composer install && php artisan migrate"
+  
