@@ -8,18 +8,16 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    
+
     steps:
     - name: Checkout Code
       uses: actions/checkout@v3
 
-    # Step 1: Set up Google Cloud authentication
-    - name: Set up Google Cloud authentication
-      uses: google-github-actions/auth@v1
+    - name: Authenticate to Google Cloud
+      uses: google-github-actions/auth@v1  # ใช้เวอร์ชันที่รองรับ v1
       with:
-        credentials_json: ${{ secrets.GCP_CREDENTIALS }}  # GCP_CREDENTIALS คือ GitHub Secret ที่เก็บ Service Account Key
+        credentials_json: ${{ secrets.GCP_SA_KEY }}  # ระบุ Secret สำหรับ GCP Service Account Key
 
-    # Step 2: Deploy to Google Cloud VM
-    - name: Deploy to Google Cloud VM
+    - name: Deploy to VM
       run: |
         gcloud compute ssh my-test-deploy --zone asia-southeast1-a --project triple-env-447304-f9 --command "cd /var/www/html/my-project && git pull && composer install && php artisan migrate"
