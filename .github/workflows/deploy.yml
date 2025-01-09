@@ -3,7 +3,7 @@ name: Deploy to Google Cloud VM
 on:
   push:
     branches:
-      - main  # ทำงานเมื่อ Push ไปยัง Branch `main`
+      - main
 
 jobs:
   deploy:
@@ -13,16 +13,18 @@ jobs:
     - name: Checkout Code
       uses: actions/checkout@v3
 
+    - name: Install Python 2
+      run: sudo apt-get install python2
+
     - name: Authenticate to Google Cloud
       uses: google-github-actions/auth@v0
       with:
-        credentials_json: ${{ secrets.GCP_SA_KEY }}  # ใช้ credentials จาก GitHub Secrets
+        credentials_json: ${{ secrets.GCP_SA_KEY }}
 
     - name: Set up Google Cloud SDK
       uses: google-github-actions/setup-gcloud@v2
       with:
-        version: '330.0.0'  # ใช้เวอร์ชันอื่น เช่น '330.0.0'
-        project_id: 'triple-env-447304-f9'  # กำหนด project ID ที่ใช้
+        project_id: 'triple-env-447304-f9'
 
     - name: Deploy to VM
       run: |
