@@ -13,16 +13,16 @@ jobs:
     - name: Checkout Code
       uses: actions/checkout@v3
 
+    - name: Authenticate to Google Cloud
+      uses: google-github-actions/auth@v0
+      with:
+        credentials_json: ${{ secrets.GCP_SA_KEY }}  # ใช้ credentials จาก GitHub Secrets
+
     - name: Set up Google Cloud SDK
       uses: google-github-actions/setup-gcloud@v2
       with:
         version: '380.0.0'
         project_id: 'triple-env-447304-f9'  # กำหนด project ID ที่ใช้
-
-    - name: Authenticate to Google Cloud
-      uses: google-github-actions/auth@v0
-      with:
-        credentials_json: ${{ secrets.GCP_SA_KEY }}  # ดึง credentials จาก GitHub Secrets
 
     - name: Deploy to VM
       run: |
