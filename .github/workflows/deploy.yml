@@ -16,8 +16,8 @@ jobs:
     - name: Deploy to FTP Server
       uses: SamKirkland/FTP-Deploy-Action@4.3.0
       with:
-        server: ftp://ftp.example.com  # URL เซิร์ฟเวอร์ FTP
-        username: ${{ secrets.FTP_USERNAME }}  # Username จาก Secrets
-        password: ${{ secrets.FTP_PASSWORD }}  # Password จาก Secrets
-        local-dir: ./  # ไฟล์ที่ต้องอัปโหลด
-        server-dir: /var/www/html  # ไฟล์ปลายทาง
+        server: ftp://ftp.example.com  # URL ของ FTP Server
+        username: ${{ secrets.FTP_USERNAME }}  # Secrets สำหรับ username
+        password: ${{ secrets.FTP_PASSWORD }}  # Secrets สำหรับ password
+        local-dir: ./  # โฟลเดอร์ต้นทาง
+        server-dir: /var/www/html  # โฟลเดอร์ปลายทาง
