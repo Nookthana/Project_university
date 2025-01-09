@@ -18,11 +18,13 @@ jobs:
       with:
         credentials_json: ${{ secrets.GCP_SA_KEY }}  # ใช้ Secret สำหรับ Service Account Key
 
+    - name: Set up SSH
+      run: |
+        mkdir -p ~/.ssh
+        cp /home/runner/.ssh/google_compute_engine ~/.ssh/google_compute_engine
+        chmod 600 ~/.ssh/google_compute_engine
+        ssh-keyscan -H 35.234.0.0 >> ~/.ssh/known_hosts  # เพิ่ม host key สำหรับ Google Cloud
+        
     - name: Deploy to VM
       run: |
-        # สร้าง SSH key และกำหนดสิทธิ์ให้ถูกต้อง
-        mkdir -p ~/.ssh
-        gcloud auth activate-service-account --key-file="${{ secrets.GCP_SA_KEY }}"
-        
-        # ใช้ gcloud สำหรับการตั้งค่า SSH key และเชื่อมต่อไปยัง VM
         gcloud compute ssh my-test-deploy --zone asia-southeast1-a --project triple-env-447304-f9 --command "cd /var/www/html/my-project && git pull && composer install && php artisan migrate"
