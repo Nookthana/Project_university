@@ -18,11 +18,18 @@ jobs:
       with:
         credentials_json: ${{ secrets.GCP_SA_KEY }}  # ใช้ Secret สำหรับ Service Account Key
 
+    - name: Set up Google Cloud SDK
+      run: |
+        # สร้างไฟล์ JSON จากค่าใน GitHub Secret
+        echo "${{ secrets.GCP_SA_KEY }}" > "${HOME}/gcloud-service-key.json"
+        
+        # ใช้ไฟล์นี้ในการ Authenticate
+        gcloud auth activate-service-account --key-file="${HOME}/gcloud-service-key.json"
+        
+        # กำหนด project ที่จะทำงานด้วย
+        gcloud config set project triple-env-447304-f9
+
     - name: Deploy to VM
       run: |
-        # สร้าง SSH key และกำหนดสิทธิ์ให้ถูกต้อง
-        mkdir -p ~/.ssh
-        gcloud auth activate-service-account --key-file="${{ secrets.GCP_SA_KEY }}"
-        
-        # ใช้ gcloud สำหรับการตั้งค่า SSH key และเชื่อมต่อไปยัง VM
+        # ใช้คำสั่ง gcloud สำหรับการเชื่อมต่อและอัพเดต VM
         gcloud compute ssh my-test-deploy --zone asia-southeast1-a --project triple-env-447304-f9 --command "cd /var/www/html/my-project && git pull && composer install && php artisan migrate"
