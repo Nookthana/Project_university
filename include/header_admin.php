@@ -9,20 +9,20 @@ if (!isset($active)) {
 }
 
 
-if (isset($_SESSION['id'])) {
+// if (isset($_SESSION['id'])) {
 
-    $id =  $_SESSION['id'];
-    $fname = $_SESSION['Firstname'];
-    $lname = $_SESSION['LastName'];
-    $avatar = $_SESSION['Avatar'];
-    $update = $_SESSION['Update'];
+//     $id =  $_SESSION['id'];
+//     $fname = $_SESSION['Firstname'];
+//     $lname = $_SESSION['LastName'];
+//     $avatar = $_SESSION['Avatar'];
+//     $update = $_SESSION['Update'];
 
 
 
     
-} else {
-    header('Location: index.php');
-}
+// } else {
+//     header('Location: index.php');
+// }
 
 
 ?>
