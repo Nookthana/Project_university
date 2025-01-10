@@ -88,11 +88,11 @@ try {
     $res = new stdClass();
 
     if ($_SERVER['REQUEST_METHOD'] == "POST") {
-        $sql = $conn->prepare("SELECT * FROM `member` LIMIT 1");
-        $sql->execute();
+        $user = $conn->prepare("SELECT * FROM `member` LIMIT 1");
+        $user->execute();
 
         
-        $row = $sql->rowCount();
+        $row = $user->rowCount();
 
         if ($row > 0) {
             
@@ -109,7 +109,7 @@ try {
             $res->data = $user;
 
             $id_admin_row =  $_SESSION['id'];
-           header('Location: map_village.php');
+           //header('Location: map_village.php');
             // $date = date("Y-m-d H:i:s");
             // $updateSql = $conn->prepare("UPDATE `member` SET `update` = ? WHERE id = ?");
             // $updateSql->execute([$date, $_SESSION['id']]);
