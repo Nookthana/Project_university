@@ -108,6 +108,7 @@ try {
             $res->message = "ok";
             $res->data = $user;
 
+            $id_admin_row =  $_SESSION['id'];
             // $date = date("Y-m-d H:i:s");
             // $updateSql = $conn->prepare("UPDATE `member` SET `update` = ? WHERE id = ?");
             // $updateSql->execute([$date, $_SESSION['id']]);
