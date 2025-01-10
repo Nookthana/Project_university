@@ -89,35 +89,30 @@ try {
 
     if ($_SERVER['REQUEST_METHOD'] == "POST") {
         $data = json_decode(file_get_contents("php://input"));
-
-        // Prepare and execute the query with LIMIT 1
-        $sql = $conn->prepare("SELECT * FROM `member` WHERE `Username` = ? AND `Password` = ? LIMIT 1");
-        $sql->execute([$data->userName, $data->passWord]);
+        $user = $conn->prepare("SELECT * FROM `member`");
+        $sql->execute();
         $row = $sql->rowCount();
 
         if ($row > 0) {
-            // Fetch the first row (only one row due to LIMIT 1)
+            
             $user = $sql->fetch(PDO::FETCH_ASSOC);
 
-            // Set session variables
             $_SESSION['id'] = $user['id'];
             $_SESSION['Firstname'] = $user['Firstname'];
             $_SESSION['LastName'] = $user['LastName'];
             $_SESSION['Avatar'] = $user['Avatar'];
             $_SESSION['Update'] = $user['update'];
 
-            // Prepare response
+            
             $res->status = 200;
             $res->message = "ok";
-            $res->data = $user;  // Send back the user data as JSON
+            $res->data = $user;  
 
-            // Update the 'update' field in the database
             $date = date("Y-m-d H:i:s");
             $sql = $conn->prepare("UPDATE `member` SET `update` = ? WHERE id = ?");
             $sql->execute([$date, $_SESSION['id']]);
 
         } else {
-            // User not found
             $res->status = 404;
             $res->message = "Not Found";
             http_response_code(404);
@@ -126,21 +121,18 @@ try {
         }
 
     } else {
-        // Invalid request method
         $res->status = 400;
         $res->message = "Bad Request";
         http_response_code(400);
         echo json_encode($res);
         exit();
     }
-
-    // Send the response
+   
     echo json_encode($res);
     http_response_code(200);
     exit();
 
 } catch (PDOException $e) {
-    // Handle any errors
     $res->status = 500;
     $res->message = "Internal Server Error: " . $e->getMessage();
     http_response_code(500);
