@@ -88,11 +88,11 @@ try {
     $res = new stdClass();
 
     if ($_SERVER['REQUEST_METHOD'] == "POST") {
-        $user = $conn->prepare("SELECT * FROM `member` LIMIT 1");
-        $user->execute();
+        $sql = $conn->prepare("SELECT * FROM `member` LIMIT 1");
+        $sql->execute();
 
         
-        $row = $user->rowCount();
+        $row = $sql->rowCount();
 
         if ($row > 0) {
             
