@@ -88,9 +88,10 @@ try {
     $res = new stdClass();
 
     if ($_SERVER['REQUEST_METHOD'] == "POST") {
-        $data = json_decode(file_get_contents("php://input"));
-        $user = $conn->prepare("SELECT * FROM `member`");
+        $sql = $conn->prepare("SELECT * FROM `member` LIMIT 1");
         $sql->execute();
+
+        
         $row = $sql->rowCount();
 
         if ($row > 0) {
@@ -103,14 +104,13 @@ try {
             $_SESSION['Avatar'] = $user['Avatar'];
             $_SESSION['Update'] = $user['update'];
 
-            
             $res->status = 200;
             $res->message = "ok";
-            $res->data = $user;  
+            $res->data = $user;
 
-            $date = date("Y-m-d H:i:s");
-            $sql = $conn->prepare("UPDATE `member` SET `update` = ? WHERE id = ?");
-            $sql->execute([$date, $_SESSION['id']]);
+            // $date = date("Y-m-d H:i:s");
+            // $updateSql = $conn->prepare("UPDATE `member` SET `update` = ? WHERE id = ?");
+            // $updateSql->execute([$date, $_SESSION['id']]);
 
         } else {
             $res->status = 404;
@@ -127,7 +127,7 @@ try {
         echo json_encode($res);
         exit();
     }
-   
+
     echo json_encode($res);
     http_response_code(200);
     exit();
