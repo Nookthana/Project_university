@@ -1,7 +1,7 @@
 <?php
 $servername = "localhost";
 $username = "root";
-$password = "";
+$password = "root";
 
 date_default_timezone_set('Asia/Bangkok');
 header("Content-Type: application/json; charset=UTF-8");
