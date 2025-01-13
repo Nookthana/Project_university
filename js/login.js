@@ -28,7 +28,7 @@ if ($('#userName').val().length <= 0) {
     axios.post('../api/login/login.php',data)
     .then(res => {
 
-       if (res.data.status == 200) {
+       if (res.status == 200) {
     
         Swal.fire({ 
             position: 'center',
