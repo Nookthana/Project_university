@@ -8,7 +8,6 @@ jobs:
       - checkout
       - setup_remote_docker:
           docker_layer_caching: true
-          # docker_socket: /var/run/docker.sock  # หากไม่จำเป็นสามารถคอมเมนต์ออกได้
       - run:
           name: Install PHP, Composer, and Dependencies
           command: |
@@ -17,12 +16,6 @@ jobs:
             sudo mv composer.phar /usr/local/bin/composer
             php -v
             composer -v
-      - run:
-          name: Install Composer Dependencies
-          command: |
-            composer -v  
-            composer install --no-dev --no-interaction --prefer-dist --no-cache --verbose
-
       - persist_to_workspace:
           root: .
           paths:
@@ -43,7 +36,6 @@ jobs:
           at: .
       - setup_remote_docker:
           docker_layer_caching: true
-          # docker_socket: /var/run/docker.sock  # หากไม่จำเป็นสามารถคอมเมนต์ออกได้
       - run:
           name: Build Docker image
           command: |
