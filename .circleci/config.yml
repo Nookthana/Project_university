@@ -20,7 +20,9 @@ jobs:
       - run:
           name: Install Composer Dependencies
           command: |
-            composer install --no-dev --no-interaction --prefer-dist --no-cache
+            composer -v  
+            composer install --no-dev --no-interaction --prefer-dist --no-cache --verbose
+
       - persist_to_workspace:
           root: .
           paths:
