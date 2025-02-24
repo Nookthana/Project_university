@@ -1,0 +1,77 @@
+version: 2.1
+
+jobs:
+  build:
+    docker:
+      - image: cimg/php:8.2-node
+    steps:
+      - checkout
+      - setup_remote_docker:
+          docker_layer_caching: true  
+          #docker_socket: /var/run/docker.sock  
+      - run:
+          name: Install PHP, Composer, and Dependencies
+          command: |
+            sudo apt-get update && sudo apt-get install -y php-cli php-fpm php-mbstring php-xml php-json curl sudo git unzip
+            curl -sS https://getcomposer.org/installer | sudo php
+            sudo mv composer.phar /usr/local/bin/composer
+            php -v
+            composer -v
+      - run:
+          name: Install Composer Dependencies
+          command: |
+            composer install --no-dev --no-interaction --prefer-dist
+      - persist_to_workspace:
+          root: .
+          paths:
+            - vendor
+            - .env
+            - config
+            - database
+            - app
+            - bootstrap
+            - storage
+
+  deploy:
+    docker:
+      - image: cimg/php:8.2-node
+    steps:
+      - checkout
+      - attach_workspace:
+          at: .
+      - setup_remote_docker:
+          docker_layer_caching: true  
+          #docker_socket: /var/run/docker.sock  
+      - run:
+          name: Build Docker image
+          command: |
+            docker build -f ./Dockerfile -t nookthana70/project-university:latest .
+      - run:
+          name: Tag Docker image
+          command: |
+            docker tag nookthana70/project-university:latest nookthana70/project-university:${CIRCLE_SHA1}
+      - run:
+          name: Docker login
+          command: echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+      - run:
+          name: Push Docker image
+          command: |
+            docker push nookthana70/project-university:latest
+            docker push nookthana70/project-university:${CIRCLE_SHA1}
+
+workflows:
+  version: 2
+  build-and-deploy:
+    jobs:
+      - build:
+          filters:
+            branches:
+              only:
+                - main
+      - deploy:
+          requires:
+            - build
+          filters:
+            branches:
+              only:
+                - main
