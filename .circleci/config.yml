@@ -16,24 +16,16 @@ jobs:
             sudo mv composer.phar /usr/local/bin/composer
             php -v
             composer -v
-      - persist_to_workspace:
-          root: .
-          paths:
-            - vendor
-            - .env
-            - config
-            - database
-            - app
-            - bootstrap
-            - storage
+      - run:
+          name: Install Composer Dependencies
+          command: |
+            composer install --no-dev --no-interaction --prefer-dist --no-cache
 
   deploy:
     docker:
       - image: cimg/php:8.2-node
     steps:
       - checkout
-      - attach_workspace:
-          at: .
       - setup_remote_docker:
           docker_layer_caching: true
       - run:
