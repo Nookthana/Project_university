@@ -7,8 +7,8 @@ jobs:
     steps:
       - checkout
       - setup_remote_docker:
-          docker_layer_caching: true  
-          #docker_socket: /var/run/docker.sock  
+          docker_layer_caching: true
+          # docker_socket: /var/run/docker.sock  # หากไม่จำเป็นสามารถคอมเมนต์ออกได้
       - run:
           name: Install PHP, Composer, and Dependencies
           command: |
@@ -20,7 +20,7 @@ jobs:
       - run:
           name: Install Composer Dependencies
           command: |
-            composer install --no-dev --no-interaction --prefer-dist
+            composer install --no-dev --no-interaction --prefer-dist --no-cache
       - persist_to_workspace:
           root: .
           paths:
@@ -40,8 +40,8 @@ jobs:
       - attach_workspace:
           at: .
       - setup_remote_docker:
-          docker_layer_caching: true  
-          #docker_socket: /var/run/docker.sock  
+          docker_layer_caching: true
+          # docker_socket: /var/run/docker.sock  # หากไม่จำเป็นสามารถคอมเมนต์ออกได้
       - run:
           name: Build Docker image
           command: |
