@@ -9,17 +9,13 @@ jobs:
       - setup_remote_docker:
           docker_layer_caching: true
       - run:
-          name: Install PHP, Composer, and Dependencies
+          name: Install PHP and Composer
           command: |
             sudo apt-get update && sudo apt-get install -y php-cli php-fpm php-mbstring php-xml php-json curl sudo git unzip
             curl -sS https://getcomposer.org/installer | sudo php
             sudo mv composer.phar /usr/local/bin/composer
             php -v
             composer -v
-      - run:
-          name: Install Composer Dependencies
-          command: |
-            composer install --no-dev --no-interaction --prefer-dist --no-cache
 
   deploy:
     docker:
